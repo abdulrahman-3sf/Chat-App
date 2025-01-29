@@ -16,7 +16,9 @@ def display_channel_options():
     print("1. Create Channel")
     print("2. Join Channel")
     print("3. Leave Channel")
-    print("4. Back to Main Menu")
+    print("4. Delete Channel")
+    print("5. Back to Main Menu")
+
 
 def display_conversation_menu(is_leader):
     print("\nConversation Menu:")
@@ -240,8 +242,40 @@ def main():
 
 
                 elif option == "4":
+                    # Get the channels created by the current user
+                    channels = proxy.get_channels_by_user(user_name)
+                    
+                    if channels:
+                        print("\nYour Created Channels:")
+                        for channel_id, channel in channels.items():
+                            print(f"{channel['channel_name']}")  # Display channel name
+
+                        # Ask the user to choose a channel name to delete
+                        channel_name = input("\nEnter Channel Name to Delete: ")
+
+                        # Find the channel by name and get its ID
+                        channel_to_delete = None
+                        for channel_id, channel in channels.items():
+                            if channel['channel_name'].lower() == channel_name.lower():
+                                channel_to_delete = channel_id  # Store the channel_id for deletion
+                                break
+                        
+                        if channel_to_delete:
+                            # Proceed with deletion using channel_id
+                            response = proxy.delete_channel(user_name, channel_to_delete)
+                            print(response)  # Output result of deletion
+                        else:
+                            print(f"No channel found with the name '{channel_name}'.")
+                    else:
+                        print("You haven't created any channels yet.")
+
+
+
+
+                elif option == "5":
                     print("Returning to Main Menu...")
                     break
+
 
                 else:
                     print("Invalid option. Please try again.")

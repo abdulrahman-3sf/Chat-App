@@ -35,6 +35,7 @@ class ChannelServer:
     def join_channel(self, user_name, channel_id):
         return database.add_user_to_channel(user_name, channel_id)
 
+    # if there is no one in the channel, the channel will be deleted
     def leave_channel(self, user_name, channel_id):
         return database.remove_user_from_channel(user_name, channel_id)
 
@@ -70,8 +71,12 @@ class ChannelServer:
     def get_channel_id_by_name(self, channel_name):
         return database.get_channel_id_by_name(channel_name)
     
-    def get_users_in_channel(self, channel_id):
-        return database.get_users_in_channel(channel_id)
+    def get_channels_by_user(self, leader_name):
+        return database.get_channels_by_user(leader_name)
+    
+    # continue the code in database
+    def delete_channel(self, leader_name, channel_id):
+        return database.delete_channel(leader_name, channel_id)
     
 # Start the server
 server = SimpleXMLRPCServer(("127.0.0.1", 8080), allow_none=True)
@@ -104,6 +109,8 @@ server.register_function(channel_server.remove_user_by_leader, "remove_user_by_l
 server.register_function(channel_server.get_users_in_channel, "get_users_in_channel")
 server.register_function(channel_server.get_channel_id_by_name, "get_channel_id_by_name")
 server.register_function(channel_server.get_users_in_channel, "get_users_in_channel")
+server.register_function(channel_server.get_channels_by_user, "get_channels_by_user")
+server.register_function(channel_server.delete_channel, "delete_channel")
 
 print("Server is running on http://127.0.0.1:8080")
 server.serve_forever()
