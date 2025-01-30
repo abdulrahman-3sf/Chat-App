@@ -145,18 +145,17 @@ def update_channel_name(leader_id, channel_id, new_name):
 
 def remove_user_by_leader(leader_name, channel_id, user_name):
     if channel_id in db["channels"]:
-        if db["channels"][channel_id]["leader_name"] == leader_name:
-            if user_name in db["channels"][channel_id]["users"]:
-                db["channels"][channel_id]["users"].remove(user_name)
-                # two conditions:
-                    # 1. no one is in the channel
-                    # 2. there is at least one user in the channel
+        channel = db["channels"][channel_id]
+        if channel["leader_name"] == leader_name:
+            if user_name == leader_name:
+                return "Error: Leader cannot remove themselves."
+            if user_name in channel["users"]:
+                channel["users"].remove(user_name)
                 return f"User {user_name} removed from channel {channel_id} by leader successfully."
             else:
                 return f"User {user_name} is not in the channel."
         else:
-            return f"Only the leader can remove users from the channel."
-        
+            return "Only the leader can remove users from the channel."
     return f"Channel {channel_id} does not exist."
 
 def get_all_channels():
@@ -208,7 +207,6 @@ def get_channels_by_user(leader_name):
     return {channel_id: channel for channel_id, channel in db["channels"].items() if channel["leader_name"] == leader_name}
 
 
-# NEED EDIT
 def delete_channel(leader_name, channel_id):
     if channel_id not in db["channels"]:
         return "Channel does not exist."

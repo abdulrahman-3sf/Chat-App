@@ -164,9 +164,11 @@ def enter_channel(user_name, channel_id, is_leader):
 
         elif conversation_choice == "7" and is_leader:
             users_in_channel = proxy.get_users_in_channel(channel_id)
-
+           
+            users_in_channel = [user for user in users_in_channel if user != user_name]
+            
             if not users_in_channel:
-                print("No users to remove.")
+                print("No other users to remove.")
             else:
                 print("Users in Channel:")
                 for idx, user in enumerate(users_in_channel, start=1):
@@ -182,9 +184,6 @@ def enter_channel(user_name, channel_id, is_leader):
                         print("Invalid selection.")
                 except ValueError:
                     print("Invalid input. Please enter a number.")
-
-        else:
-            print("Invalid option. Please try again.")
 
 
 def main():
