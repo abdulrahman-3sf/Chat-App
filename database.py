@@ -88,21 +88,9 @@ def add_user_to_channel(user_name, channel_id):
 def remove_user_from_channel(user_name, channel_id):
     if channel_id in db["channels"]:
         if user_name in db["channels"][channel_id]["users"]:
-            lengthOfUsers = len(db["channels"][channel_id]["users"])
-            if lengthOfUsers == 1:
-                del db["channels"][channel_id]
-                return f"User {user_name} removed from channel {channel_id} successfully. Channel {channel_id} has been deleted."
-            else:
-                if db["channels"][channel_id]["leader_name"] == user_name:
-                    for user in db["channels"][channel_id]["users"]:
-                        if user != user_name:
-                            db["channels"][channel_id]["leader_name"] = user
-                            break
-                
-                return f"User {user_name} removed from channel {channel_id} successfully."
-        else:
-            return f"User {user_name} is not in the channel."
-    return f"Channel {channel_id} does not exist."
+            db["channels"][channel_id]["users"].remove(user_name)
+            return True
+    return False
 
 def add_message_to_channel(user_name, channel_id, message):
     if channel_id not in db["channels"]:
@@ -190,18 +178,13 @@ def get_messages(channel_id):
 def get_users_in_channel(channel_id):
     if channel_id in db["channels"]:
         return db["channels"][channel_id]["users"]
-    return f"Channel {channel_id} does not exist."
+    return []
 
 def get_channel_id_by_name(channel_name):
     for channel_id, data in db["channels"].items():
         if data["channel_name"] == channel_name:
             return channel_id
     return None
-
-def get_users_in_channel(channel_id):
-    if channel_id in db["channels"]:
-        return db["channels"][channel_id]["users"]
-    return []
 
 def get_channels_by_user(leader_name):
     return {channel_id: channel for channel_id, channel in db["channels"].items() if channel["leader_name"] == leader_name}
@@ -216,9 +199,15 @@ def delete_channel(leader_name, channel_id):
     if channel["leader_name"] != leader_name:
         return "Only the channel leader can delete this channel."
     
-    del db["channels"]["channel_id"]
+    del db["channels"][channel_id]  # Corrected line
     
     if channel_id in db["messages"]:
         del db["messages"][channel_id]
+    
+    return f"Channel {channel_id} deleted successfully."
 
-    return f"Channel '{channel['channel_name']}' has been deleted."
+def user_exit_channel(user_name, channel_id):
+    if remove_user_from_channel(user_name, channel_id):
+        print(f"User {user_name} has exited channel {channel_id}")
+    else:
+        print(f"User {user_name} was not in channel {channel_id}")
