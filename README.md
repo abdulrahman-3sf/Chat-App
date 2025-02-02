@@ -55,12 +55,12 @@ Choose to sign up or log in with your credentials.
 
 Create Channel: Provide a name to start a new channel (you become the leader).
 
-Join Channel: Enter a channel id to join.
+Join Channel: Enter a channel name to join.
 
 Manage Channels: Leaders can rename channels, remove users, or delete channels.
 
 --- 
-## function structuering for further integration 
+## Function Structuering for Further Integration 
 
 **Authentication**:
 
@@ -89,8 +89,6 @@ Manage Channels: Leaders can rename channels, remove users, or delete channels.
 ---
 
 ## System Design
-
-
 
 <h3>Create Channel</h3>
 <p align="center">
