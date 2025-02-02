@@ -13,6 +13,8 @@ A Python-based chat application with global and private channel support, built u
   - Channels auto-delete when empty.
 - **Real-Time Messaging**: Send and receive messages instantly in channels or the global chat.
 
+---
+
 ## Installation
 
 1. **Prerequisites**:  
@@ -59,7 +61,8 @@ Join Channel: Enter a channel name to join.
 
 Manage Channels: Leaders can rename channels, remove users, or delete channels.
 
---- 
+---
+
 ## Function Structuering for Further Integration 
 
 **Authentication**:
