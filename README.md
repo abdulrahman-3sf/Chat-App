@@ -20,7 +20,7 @@ A Python-based chat application with global and private channel support, built u
 
 2. **Clone the Repository** (if applicable):  
    ```bash
-   git clone https://github.com/your-repo/chat-app.git
+   git clone git@github.com:abdulrahman-3sf/Chat-App.git
    cd chat-app
 
 3. **Run the server**
@@ -41,19 +41,15 @@ The server starts at http://127.0.0.1:8080.
 **Login/Register**:
 Choose to sign up or log in with your credentials.
 
-1.Main Menu:
-
-2.Global Chat: Enter the public chat room.
-
-3.Show Channels: View/create/join private channels.
-
-4.Exit: Quit the application.
-
-5.Global Chat:
-
-6.Send messages, refresh the chat, or view active users.
-
-7.Exit with option 4 or 5.
+**Main Menu**: Choose which one you want to use.
+- **Global Chat**:
+   - Enter the public chat room.
+   - Send messages, refresh the chat, or view active users.
+   - Exit with option 4 or 5.
+- **Multiple Channels**:
+  - View/create/join/manage private channels.
+  - Send messages, refresh the chat, or view active users.
+  - Exit: Quit the application.
 
 **Channel Operations**:
 
@@ -67,11 +63,13 @@ Manage Channels: Leaders can rename channels, remove users, or delete channels.
 ## function structuering for further integration 
 
 **Authentication**:
+
 `register_user(username, password)`
 
 `authenticate_user(username, password)`
 
 **Global Chat**:
+
 `join_global_chat(user_name)`
 
 `send_message_to_global_chat(user_name, message)`
@@ -79,6 +77,7 @@ Manage Channels: Leaders can rename channels, remove users, or delete channels.
 `get_messages_from_global_chat()`
 
 **Channels**:
+
 `create_channel(leader_id, leader_name, channel_name)`
 
 `join_channel(user_name, channel_id)`
