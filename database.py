@@ -87,8 +87,21 @@ def add_user_to_channel(user_name, channel_id):
 
 def remove_user_from_channel(user_name, channel_id):
     if channel_id in db["channels"]:
-        if user_name in db["channels"][channel_id]["users"]:
-            db["channels"][channel_id]["users"].remove(user_name)
+        channel = db["channels"][channel_id]
+        if user_name in channel["users"]:
+            channel["users"].remove(user_name)
+            
+            # Check if the user leaving is the leader
+            if user_name == channel["leader_name"]:
+                if channel["users"]:
+                    # Assign new leader
+                    new_leader = channel["users"][0]
+                    channel["leader_name"] = new_leader
+                    print(f"New leader for channel {channel_id} is {new_leader}")
+                else:
+                    # Delete the channel if no users remain
+                    del db["channels"][channel_id]
+                    print(f"Channel {channel_id} deleted as no users remain.")
             return True
     return False
 
